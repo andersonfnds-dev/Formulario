@@ -60,8 +60,12 @@ if(isset($_POST['submit']))
 
     // Inserção dos dados no banco de dados se não há erros
     if (count($erros) == 0) {
-        $result = mysqli_query($conexao, "INSERT INTO formulario(nome,email,telefone,cpf_cnpj,data_nascimento,endereco,cep,assunto,descricao) 
-        VALUES ('$nome','$email','$telefone','$cpf_cnpj','$data_nascimento','$endereco','$cep', '$assunto', '$descricao')");
+        try{
+            $result = mysqli_query($conexao, "INSERT INTO formulario(nome,email,telefone,cpf_cnpj,data_nascimento,endereco,cep,assunto,descricao) 
+            VALUES ('$nome','$email','$telefone','$cpf_cnpj','$data_nascimento','$endereco','$cep', '$assunto', '$descricao')");
+        } catch (Exception $e) {
+            echo "Erro ao inserir dados no banco de dados: {$e->getMessage()}";
+        }
 
     // Verificação e envio do email
     if($result){
