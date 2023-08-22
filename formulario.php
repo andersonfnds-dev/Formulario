@@ -39,9 +39,12 @@ if(isset($_POST['submit']))
     $erros = array();
 
     // Validação de email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $domain = substr($email, strpos($email, '@') + 1);
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) or !checkdnsrr($domain, 'MX')) {
         $erros['email'] = 'Digite um email válido!';
     } 
+
 
     // Validação de cpf/cnpj
     if (!preg_match("/(\d{3}\.\d{3}\.\d{3}-\d{2}|\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/", $cpf_cnpj)) {
@@ -119,7 +122,6 @@ if(isset($_POST['submit']))
   }  
 }
 }
-
 ?>
 
 <!DOCTYPE html>
